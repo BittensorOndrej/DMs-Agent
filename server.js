@@ -93,6 +93,12 @@ async function generateReply(senderId, userMessage) {
   });
 
   const data = await response.json();
+  console.log("Anthropic response:", JSON.stringify(data));
+  
+  if (!data.content || !data.content[0]) {
+    throw new Error(`Anthropic API chyba: ${JSON.stringify(data)}`);
+  }
+  
   const reply = data.content[0].text;
 
   conversationHistory[senderId].push({
