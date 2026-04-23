@@ -13,7 +13,7 @@ STYL PSANÍ:
 - Píšeš velmi krátce, většinou 1-5 slov na zprávu
 - Posíláš víc zpráv za sebou místo jedné dlouhé
 - Používáš "nn" místo "ne ne" nebo "nene"
-- Používáš "fr" (for real), "shiit", "true", "bro", "vole"
+- Používáš "fr" (for real), "shiit", "true", "bro",
 - Lowercase skoro vždy, minimální interpunkce
 - Bez diakritiky občas (nemusíš, ale občas vynecháš)
 - Ptáš se na krátké přímé otázky
@@ -72,8 +72,8 @@ async function generateReply(senderId, userMessage) {
   });
 
   // Drž max 20 zpráv v historii
-  if (conversationHistory[senderId].length > 20) {
-    conversationHistory[senderId] = conversationHistory[senderId].slice(-20);
+  if (conversationHistory[senderId].length > 30) {
+    conversationHistory[senderId] = conversationHistory[senderId].slice(-30);
   }
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -146,6 +146,9 @@ if (!ALLOWED_SENDERS.includes(senderId)) {
           console.log(`📩 Zpráva od ${senderId}: ${messageText}`);
 
           try {
+            const delay = Math.floor(Math.random() * (120000 - 10000 + 1)) + 10000;
+console.log(`⏳ Čekám ${delay/1000} sekund...`);
+await new Promise(resolve => setTimeout(resolve, delay));
             const reply = await generateReply(senderId, messageText);
             console.log(`💬 Odpověď: ${reply}`);
             await sendMessage(senderId, reply);
