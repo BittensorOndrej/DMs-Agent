@@ -137,6 +137,11 @@ app.post("/webhook", async (req, res) => {
           const messageText = event.message.text;
 
           if (!messageText) continue;
+          const ALLOWED_SENDERS = ["864387443339646"];
+if (!864387443339646.includes(senderId)) {
+  console.log(`⛔ Ignoruji zprávu od ${senderId}`);
+  continue;
+}
 
           console.log(`📩 Zpráva od ${senderId}: ${messageText}`);
 
