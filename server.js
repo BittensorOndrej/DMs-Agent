@@ -107,7 +107,25 @@ async function sendMessage(recipientId, message) {
   console.log("Odeslaná zpráva:", JSON.stringify(data));
   return data;
 }
+// Reakce na zprávu (love)
+async function reactToMessage(messageId) {
+  const url = `https://graph.instagram.com/v21.0/me/messages?access_token=${ACCESS_TOKEN}`;
+  const body = {
+    recipient: { id: messageId },
+    sender_action: "react",
+    payload: { message_id: messageId, reaction: "love" },
+  };
 
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const data = await response.json();
+  console.log("Reakce:", JSON.stringify(data));
+  return data;
+}
 // Generování odpovědi pomocí Claude AI
 async function generateReply(senderId, userMessage) {
   if (!conversationHistory[senderId]) {
