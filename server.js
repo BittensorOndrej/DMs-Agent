@@ -202,6 +202,11 @@ app.post("/webhook", async (req, res) => {
           const senderId = event.sender.id;
           const messageText = event.message.text;
 
+// Lajkni zprávu pokud obsahuje reelsko nebo attachment
+if (event.message.attachments) {
+  await reactToMessage(event.message.mid);
+}
+
           if (!messageText) continue;
           const ALLOWED_SENDERS = ["960985803522596","864387443339646"];
 if (!ALLOWED_SENDERS.includes(senderId)) {
