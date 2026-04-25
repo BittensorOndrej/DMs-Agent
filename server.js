@@ -201,6 +201,7 @@ app.post("/webhook", async (req, res) => {
         if (event.message && !event.message.is_echo) {
           const senderId = event.sender.id;
           const messageText = event.message.text;
+          
 
 // Lajkni zprávu pokud obsahuje reelsko nebo attachment
 if (event.message.attachments) {
