@@ -205,7 +205,26 @@ app.post("/webhook", async (req, res) => {
 
 // Lajkni zprávu pokud obsahuje reelsko nebo attachment
 if (event.message.attachments) {
-  await reactToMessage(event.message.mid);
+  await reactToMessage(senderId, event.message.mid);
+}
+
+          async function reactToMessage(recipientId, messageId) {
+  const url = `https://graph.instagram.com/v21.0/me/messages?access_token=${ACCESS_TOKEN}`;
+  const body = {
+    recipient: { id: recipientId },
+    sender_action: "react",
+    payload: { message_id: messageId, reaction: "love" },
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const data = await response.json();
+  console.log("Reakce:", JSON.stringify(data));
+  return data;
 }
 
           if (!messageText) continue;
