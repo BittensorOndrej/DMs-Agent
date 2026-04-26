@@ -205,9 +205,11 @@ app.post("/webhook", async (req, res) => {
 
 // Lajkni zprávu pokud obsahuje reelsko nebo attachment
 if (event.message.attachments) {
+  const reactDelay = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
+  console.log(`⏳ Čekám ${reactDelay/1000} sekund před reakcí...`);
+  await new Promise(resolve => setTimeout(resolve, reactDelay));
   await reactToMessage(senderId, event.message.mid);
 }
-
           async function reactToMessage(recipientId, messageId) {
   const url = `https://graph.instagram.com/v21.0/me/messages?access_token=${ACCESS_TOKEN}`;
   const body = {
