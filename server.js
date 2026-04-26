@@ -237,7 +237,7 @@ if (!ALLOWED_SENDERS.includes(senderId)) {
           console.log(`📩 Zpráva od ${senderId}: ${messageText}`);
 
           try {
-            const delay = Math.floor(Math.random() * (120000 - 10000 + 1)) + 10000;
+            const delay = Math.floor(Math.random() * (12000 - 1000 + 1)) + 1000;
 console.log(`⏳ Čekám ${delay/1000} sekund...`);
 await new Promise(resolve => setTimeout(resolve, delay));
             const reply = await generateReply(senderId, messageText);
